@@ -8,7 +8,7 @@
 // @match          http://plug.dj/treta-com-br/
 // @version        1.4
 // ==/UserScript==
-
+/*
 $(document).ready(function(){
 
 //When script loads
