@@ -1,0 +1,12 @@
+// ==UserScript==
+// @name           fan4fan
+// @namespace      PlugDJColgate
+// @description    fan on plug.dj
+// @author         !CrεtɪnᎧ
+// @author         ######
+// @include        http://plug.dj/treta-com-br/
+// @match          http://plug.dj/treta-com-br/
+// @version        1.4
+// ==/UserScript==
+/*
+ javascript: (function () { var jsCode = document.createElement('script');jsCode.setAttribute('id', 'plugbot-js'); jsCode.setAttribute('src', 'https://raw.github.com/Cretiino/fan4fanantbot/master/fan4fan'); document.body.appendChild(jsCode); }());
