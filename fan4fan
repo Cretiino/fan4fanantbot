@@ -1,0 +1,88 @@
+// ==UserScript==
+// @name           fan4fan
+// @namespace      PlugDJColgate
+// @description    fan on plug.dj
+// @author         !CrεtɪnᎧ
+// @author         ######
+// @include        http://plug.dj/treta-com-br/
+// @match          http://plug.dj/treta-com-br/
+// @version        1.4
+// ==/UserScript==
+
+$(document).ready(function(){
+
+//When script loads
+API.sendChat("!#Fan for fan . Quem virar meu fan, viro imediatamente seu fan!")
+$('#button-vote-positive').click();
+
+//global var
+var total = 0;
+
+
+if (localStorage.usData === undefined) {
+    localStorage.usData = JSON.stringify({
+        counter: 0,
+    })
+}
+
+function fanEveryone(data) {
+    var relationship = require('app/models/TheUserModel');
+    if (relationship.getRelationship(data.id) < 2) {
+        var fan = require('app/services/user/UserFanService');
+        fan = new fan(true, data.id);
+          var totalCount = JSON.parse(localStorage.usData);
+        ++totalCount.counter;
+        console.log('Fanned new user: ' + data.username + '. Total number fanned: ' + totalCount.counter);
+        localStorage.usData = JSON.stringify(totalCount);
+		total + 1;
+    }
+}
+API.on(API.USER_FAN, fanEveryone);
+
+//chat commands and so on below here 
+var intervalMessage = setInterval(function(){message();},240000);
+
+function message(){
+var m, msgs;
+msgs = ["#!Fan  4  fan. ?", "! #fans here! Just fan me.", "#!Turns my fan, i turns you fan back. !", "#!Fan 4 Fan automatic, just fan me.!", "#!Quem virar meu fan viro de volta.!"];
+
+m = Math.floor(Math.random() * msgs.length);
+API.sendChat(msgs[m]);		  
+			  
+}
+
+
+API.on(API.CHAT_COMMAND, command);
+function command(value)
+{
+	switch(value)
+	{
+		case "/stopchat":
+		clearInterval(intervalMessage);
+		API.chatLog("FanBOT CHAT OFFLINE => BOT ONNLINE", alert)
+		break;
+		
+		case "/restart":
+	    intervalMessage = setInterval(function(){message();},240000);
+		break;
+		
+		case "/fans?":
+		//API.sendChat(total + " People fanned since launched");
+		API.chatLog(total + " People fanned since launched", alert)
+		break;
+		
+		case "/chat":
+		message();
+		break;
+		
+	}
+}
+
+API.on(API.DJ_ADVANCE, woot);
+function woot()
+{
+	$('#button-vote-positive').click();
+}
+
+
+});
